@@ -1,65 +1,83 @@
 package product;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
+import utility.ToString;
 
 public class Stock extends Product {
-  private static Stock singleInstance = null;
-  private HashMap<String, Integer> stockItem;
+    private static Stock instance = null;
+    private HashMap<Integer, Item> stockItem = new HashMap<>();
+    private int nextAvailableID = 0;
 
-  private Stock() {
-    stockItem = new HashMap<>();
-    stockItem.put("MLIK", 17);
-    stockItem.put("EGG", 12);
-    stockItem.put("TEA", 10);
-    stockItem.put("RICE", 2);
-    stockItem.put("PORK", 3);
-    stockItem.put("BROWNIE", 7);
-    stockItem.put("WATER", 1);
-    stockItem.put("MASK", 1);
-    stockItem.put("TISSUE", 7);
-  }
+    private Stock() {
+        addItem(new Item("MILK", 17));
+        addItem(new Item("EGG", 12));
+        addItem(new Item("TEA", 10));
+        addItem(new Item("RICE", 2));
+        addItem(new Item("PORK", 3));
+        addItem(new Item("BROWNIE", 7));
+        addItem(new Item("WATER", 1));
+        addItem(new Item("MASK", 1));
+        addItem(new Item("TISSUE", 7));
 
-  public static Stock getInstance() {
-    if (singleInstance == null) {
-      singleInstance = new Stock();
     }
-    return singleInstance;
-  }
 
-  @Override
-  public void addItem(String item, int amount) {
-    if (this.stockItem.containsKey(item)) {
-      this.stockItem.put(item, stockItem.get(item) + amount);
-    } else {
-      this.stockItem.put(item, amount);
+    public static Stock getInstance() {
+        if (instance == null) {
+            instance = new Stock();
+        }
+        return instance;
     }
-  }
 
-  public String getStockItems() {
-    return stockItem.entrySet().toString();
-  }
-
-  public void removeProduct(String item) {
-    this.stockItem.remove(item);
-  }
-
-  // @override
-  public boolean removeItem(String item, int amount) {
-    if (amount <= checkStock(item)) {
-      stockItem.put(item, stockItem.get(item) - amount);
-      return true;
+    @Override
+    public void addItem(Item item) {
+        int id = getItemID(item);
+        if (id == nextAvailableID) {
+            this.stockItem.put(id, item);
+            nextAvailableID++;
+        } else {
+            int currentAmount = getAmount(id);
+            this.stockItem.put(id, new Item(item.getName(), currentAmount + item.getAmount()));
+        }
     }
-    return false;
-  }
 
-  public void removeAllItems() {
-    this.stockItem.clear();
-  }
-
-  private int checkStock(String item) {
-    if (this.stockItem.containsKey(item)) {
-      return this.stockItem.get(item);
+    @Override
+    public String getItems() {
+        return ToString.stockItemToString(stockItem);
     }
-    return 0;
-  }
+
+    public boolean removeItem(Item item) {
+        if (item.getAmount() <= checkStock(item)) {
+            int id = getItemID(item);
+            int currentItemInStock = getAmount(id);
+            this.stockItem.put(id, new Item(item.getName(), currentItemInStock - item.getAmount()));
+            return true;
+        }
+        return false;
+    }
+
+    public void removeProduct(int id) {
+        this.stockItem.remove(id);
+    }
+
+    private int checkStock(Item item) {
+        int id = getItemID(item);
+        if (id == nextAvailableID) {
+            return 0;
+        }
+        return stockItem.get(id).getAmount();
+    }
+
+    private int getItemID(Item item) {
+        for (Entry<Integer, Item> entry : stockItem.entrySet()) {
+            if (entry.getValue().equals(item)) {
+                return entry.getKey();
+            }
+        }
+        return nextAvailableID;
+    }
+
+    private int getAmount(int id) {
+        return stockItem.get(id).getAmount();
+    }
 }

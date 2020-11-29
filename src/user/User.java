@@ -1,11 +1,14 @@
 package user;
 
+import java.util.Scanner;
+
 public interface User {
 
-  public void add(String item, int amount);
+    public void run(Scanner userInput);
+    // private String add();
 
-  public void remove(String item);
+    // private String remove();
 
-  public String view();
+    // private String view();
 
 }
