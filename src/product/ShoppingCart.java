@@ -1,6 +1,9 @@
 package product;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
 import utility.ToString;
 
 public class ShoppingCart extends Product {
@@ -33,6 +36,15 @@ public class ShoppingCart extends Product {
             this.cart.remove(name);
         }
         return amount;
+    }
+
+    public List<Item> removeAllItem() {
+        ArrayList<Item> items = new ArrayList<>();
+        for (Entry<String, Integer> entry : cart.entrySet()) {
+            items.add(new Item(entry.getKey(), entry.getValue()));
+        }
+        cart.clear();
+        return items;
     }
 
     private int countItemInCart(String name) {

@@ -10,7 +10,7 @@ public class Stock extends Product {
     private int nextAvailableID = 0;
 
     private Stock() {
-        addItem(new Item("MLIK", 17));
+        addItem(new Item("MILK", 17));
         addItem(new Item("EGG", 12));
         addItem(new Item("TEA", 10));
         addItem(new Item("RICE", 2));
@@ -79,18 +79,5 @@ public class Stock extends Product {
 
     private int getAmount(int id) {
         return stockItem.get(id).getAmount();
-    }
-
-    public static void main(String[] args) {
-        Stock stock = Stock.getInstance();
-        System.out.println(stock.getItems());
-        stock.addItem(new Item("TISSUE", 5));
-        System.out.println(stock.getItems());
-        stock.removeItem(new Item("WATER", 1));
-        stock.removeItem(new Item("EGG", 3));
-        stock.removeItem(new Item("RICE", 3));
-        System.out.println(stock.getItems());
-        stock.removeProduct(7);
-        System.out.println(stock.getItems());
     }
 }

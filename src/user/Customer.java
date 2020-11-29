@@ -8,7 +8,7 @@ public class Customer implements User {
     private boolean isExitMode;
 
     private enum Option {
-        ADD, REMOVE, VIEW, BACK, QUIT
+        ADD, REMOVE, CHECKOUT, VIEW, BACK, QUIT
     }
 
     @Override
@@ -24,6 +24,7 @@ public class Customer implements User {
         System.out.println("      example: ADD milk 4");
         System.out.println("Enter 'REMOVE' <name> to remove item from cart.");
         System.out.println("      example: REMOVE milk");
+        System.out.println("Enter 'CHECKOUT' to checkout all items and receive receipt.");
         System.out.println("Enter 'VIEW' to see all items in cart.");
         System.out.println("Enter 'BACK' to go to login page");
         System.out.println("Enter 'QUIT' to exit program\n");
@@ -59,6 +60,8 @@ public class Customer implements User {
             } catch (Exception e) {
                 System.out.println("Invalid input: please type in format as the instruction.");
             }
+        } else if (splitInput[0].equals(Option.CHECKOUT.toString())) {
+            System.out.println(checkout());
         } else if (splitInput[0].equals(Option.VIEW.toString())) {
             System.out.println(view());
         } else if (splitInput[0].equals(Option.BACK.toString())) {
@@ -79,6 +82,10 @@ public class Customer implements User {
 
     private String remove(String name) {
         return manager.removeItemFromCart(name);
+    }
+
+    private String checkout() {
+        return manager.checkout();
     }
 
     private String view() {
