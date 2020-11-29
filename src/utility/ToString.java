@@ -11,10 +11,10 @@ public class ToString {
         StringBuilder bld = new StringBuilder();
         bld.append("{");
         for (Map.Entry<Integer, Item> entry : stockItem.entrySet()) {
-            bld.append("(id: " + entry.getKey() + ", " + entry.getValue().toString() + "), ");
+            bld.append("(id: " + entry.getKey() + ", " + entry.getValue().toString() + "),\n");
         }
-        if (bld.length() > 0) {
-            bld.setLength(bld.length() - 1);
+        if (bld.length() > 1) {
+            bld.setLength(bld.length() - 2);
         }
         bld.append("}");
         return bld.toString();
@@ -25,10 +25,10 @@ public class ToString {
 
         bld.append("{");
         for (Map.Entry<String, Integer> entry : cart.entrySet()) {
-            bld.append("name: " + entry.getKey() + ", " + entry.getValue() + "), ");
+            bld.append("(name: " + entry.getKey() + ", " + entry.getValue() + "),\n");
         }
-        if (bld.length() > 0) {
-            bld.setLength(bld.length() - 1);
+        if (bld.length() > 1) {
+            bld.setLength(bld.length() - 2);
         }
         bld.append("}");
         return bld.toString();
