@@ -1,11 +1,10 @@
 package user;
 
 public interface User {
+    public String add();
 
-  public void add(String item, int amount);
+    public String remove();
 
-  public void remove(String item);
-
-  public String view();
+    public String view();
 
 }

@@ -1,28 +1,23 @@
 package user;
 
-import product.StockManager;
-
 public class Admin implements User {
-  private StockManager stockManager = new StockManager();
 
-  public Admin() {
-    // Do nothing
-  }
+    @Override
+    public String add() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-  @Override
-  public void add(String item, int amount) {
-    stockManager.addItem(item, amount);
-  }
+    @Override
+    public String remove() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-  @Override
-  public void remove(String item) {
-    stockManager.removeItem(item);
-  }
-
-  @Override
-  public String view() {
-    return stockManager.getAllItems();
-
-  }
+    @Override
+    public String view() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

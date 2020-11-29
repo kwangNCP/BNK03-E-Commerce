@@ -1,49 +1,44 @@
 package product;
 
 import java.util.HashMap;
-import java.util.Map;
+import utility.ToString;
 
 public class ShoppingCart extends Product {
-  private static ShoppingCart singleInstance = null;
-  private HashMap<String, Integer> cart = new HashMap<>();
+    private static ShoppingCart singleInstance = null;
+    private HashMap<String, Integer> cart = new HashMap<>();
 
-  private ShoppingCart() {}
-
-  public static ShoppingCart getInstance() {
-    if (singleInstance == null) {
-      singleInstance = new ShoppingCart();
+    private ShoppingCart() {
     }
-    return singleInstance;
-  }
 
-  @Override
-  public void addItem(String item, int amount) {
-    this.cart.put(item, amount);
-  }
-
-  public String getCartItems() {
-    return this.cart.entrySet().toString();
-  }
-
-  public int removeItem(String item) {
-    int amount = countItemInCart(item);
-    if (amount > 0) {
-      this.cart.remove(item);
+    public static ShoppingCart getInstance() {
+        if (singleInstance == null) {
+            singleInstance = new ShoppingCart();
+        }
+        return singleInstance;
     }
-    return amount;
-  }
 
-  public Map<String, Integer> removeAllItems() {
-    Map<String, Integer> items = new HashMap<>(cart);
-    this.cart.clear();
-    System.out.println(items);
-    return items;
-  }
-
-  private int countItemInCart(String item) {
-    if (this.cart.containsKey(item)) {
-      return this.cart.get(item);
+    @Override
+    public void addItem(Item item) {
+        this.cart.put(item.getName(), item.getAmount());
     }
-    return 0;
-  }
+
+    @Override
+    public String getItems() {
+        return ToString.cartItemToString(cart);
+    }
+
+    public int removeItem(String name) {
+        int amount = countItemInCart(name);
+        if (amount > 0) {
+            this.cart.remove(name);
+        }
+        return amount;
+    }
+
+    private int countItemInCart(String name) {
+        if (this.cart.containsKey(name)) {
+            return this.cart.get(name);
+        }
+        return 0;
+    }
 }
