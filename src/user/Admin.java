@@ -1,23 +1,26 @@
 package user;
 
+import product.Manager;
+
 public class Admin implements User {
+    private Manager manager = new Manager();
 
     @Override
-    public String add() {
+    public void run() {
         // TODO Auto-generated method stub
-        return null;
+
     }
 
-    @Override
-    public String remove() {
-        // TODO Auto-generated method stub
-        return null;
+    private String add(String name, int amount) {
+        return manager.addItemToStock(name, amount);
     }
 
-    @Override
-    public String view() {
-        // TODO Auto-generated method stub
-        return null;
+    private String remove(String name, int amount) {
+        return manager.removeItemFromStock(name, amount);
+    }
+
+    private String view() {
+        return manager.getStockItems();
     }
 
 }

@@ -11,35 +11,47 @@ public class Manager {
         // Do nothing
     }
 
-    public void addItemToCart(String name, int amount) {
+    public String addItemToCart(String name, int amount) {
         Item item = new Item(name, amount);
         boolean isRemove = stock.removeItem(item);
         if (isRemove) {
             shoppingCart.addItem(item);
+            return "Success: Add " + name + " to cart completed!";
         }
-        System.out.println();
+        return "Error: Add " + name + " to cart incomplete!, " + name + " in stock not enough.";
     }
 
-    public void removeItemFromCart(String name) {
+    public String removeItemFromCart(String name) {
         int amount = shoppingCart.removeItem(name);
         if (amount > 0) {
             Item item = new Item(name, amount);
             stock.addItem(item);
+            return "Success: Remove " + name + " from cart completed!";
         }
+        return "Error: No " + name + " in cart.";
     }
 
     public String getCartItems() {
         return shoppingCart.getItems();
     }
 
-    public void addItemToStock(String name, int amount) {
-        Item item = new Item(name, amount);
-        stock.addItem(item);
+    public String addItemToStock(String name, int amount) {
+        try {
+            Item item = new Item(name, amount);
+            stock.addItem(item);
+            return "Success: Add " + name + " completed!";
+        } catch (Exception e) {
+            return "Error: Add " + name + " failed!";
+        }
     }
 
-    public void removeItemFromStock(String name, int amount) {
+    public String removeItemFromStock(String name, int amount) {
         Item item = new Item(name, amount);
-        stock.removeItem(item);
+        boolean isRemove = stock.removeItem(item);
+        if (isRemove) {
+            return "Success: Remove " + name + " completed!";
+        }
+        return "Error: Remove " + name + " failed!, " + name + " in stock not enough.";
     }
 
     public String getStockItems() {
