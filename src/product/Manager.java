@@ -1,6 +1,6 @@
 package product;
 
-import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,13 +12,15 @@ public class Manager {
     private Product stockProduct = Stock.getInstance();
     private Stock stock = (Stock) stockProduct;
 
+    private String errorText = "Error: amount must more than 0";
+
     public Manager() {
         // Do nothing
     }
 
     public String addItemToCart(String name, int amount) {
         if (amount <= 0) {
-            return "Error: amount must more than 0";
+            return errorText;
         }
         Item item = new Item(name, amount);
         boolean isRemove = stock.removeItem(item);
@@ -41,12 +43,24 @@ public class Manager {
 
     public String checkout() {
         ArrayList<Item> cartItem = (ArrayList<Item>) shoppingCart.removeAllItem();
-        try (BufferedWriter receipt =
-                new BufferedWriter(new FileWriter("../../receipt.txt", true))) {
+        if (cartItem.isEmpty()) {
+            return "Cannot checkout, your cart is empty.";
+        }
+        String destination = "C:\\Users\\natthapongjie\\Desktop\\receipt.txt";
+        try {
+            File receiptFile = new File(destination);
+            boolean status = receiptFile.createNewFile();
+            System.out.println(status);
+        } catch (IOException e) {
+            System.out.println("ERROR!");
+            e.printStackTrace();
+        }
+
+        try (FileWriter receipt = new FileWriter(destination);) {
             for (Item item : cartItem) {
-                receipt.write(item.getName() + " " + item.getAmount());
+                receipt.write(item.getName() + " " + item.getAmount() + "\n");
             }
-            return "Success!";
+            return "Success, type 'BACK' to go to main menu or 'QUIT' to exit program.\n";
         } catch (IOException e) {
             System.out.println("An error occurred.");
             return "Failed!";
@@ -59,7 +73,7 @@ public class Manager {
 
     public String addItemToStock(String name, int amount) {
         if (amount <= 0) {
-            return "Error: amount must more than 0";
+            return errorText;
         }
         try {
             Item item = new Item(name, amount);
@@ -72,7 +86,7 @@ public class Manager {
 
     public String removeItemFromStock(String name, int amount) {
         if (amount <= 0) {
-            return "Error: amount must more than 0";
+            return errorText;
         }
         Item item = new Item(name, amount);
         boolean isRemove = stock.removeItem(item);
