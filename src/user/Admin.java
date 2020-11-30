@@ -22,8 +22,8 @@ public class Admin implements User {
 
         System.out.println("Enter 'ADD' <name> <amount> to add item to cart.");
         System.out.println("      example: ADD milk 4");
-        System.out.println("Enter 'REMOVE' <name> to remove item from cart.");
-        System.out.println("      example: REMOVE milk");
+        System.out.println("Enter 'REMOVE' <name> <amount> to remove item from cart.");
+        System.out.println("      example: REMOVE milk 5");
         System.out.println("Enter 'VIEW' to see all items in cart.");
         System.out.println("Enter 'BACK' to go to login page");
         System.out.println("Enter 'QUIT' to exit program\n");
