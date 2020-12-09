@@ -60,7 +60,8 @@ public class Customer implements User {
             } catch (Exception e) {
                 System.out.println("Invalid input: please type in format as the instruction.");
             }
-        } else if (splitInput[0].equals(Option.CHECKOUT.toString())) {
+        } else if (splitInput[0].equals(Option.CHECKOUT.toString())) 
+        {
             System.out.println(checkout());
         } else if (splitInput[0].equals(Option.VIEW.toString())) {
             System.out.println(view());
