@@ -38,6 +38,10 @@ class Stock implements IProduct {
       );
     }
   }
+
+  /**
+   * TODO  change this after ToString util finished.
+   */
   getItems(): any {
     return this._stockItem;
   }
