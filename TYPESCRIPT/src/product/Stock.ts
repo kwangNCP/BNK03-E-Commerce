@@ -1,7 +1,7 @@
 import { IProduct } from "./IProduct";
 import { Item } from "./Item";
 
-class Stock implements IProduct {
+export class Stock implements IProduct {
   private static _instance: Stock = null;
   private _stockItem: Map<number, Item> = new Map();
   private _nextAvailableID: number = 0;
@@ -25,7 +25,7 @@ class Stock implements IProduct {
     return this._instance;
   }
 
-  addItem(item: Item): void {
+  public addItem(item: Item): void {
     let id: number = this._getItemID(item);
     if (id === this._nextAvailableID) {
       this._stockItem.set(id, item);
@@ -42,7 +42,10 @@ class Stock implements IProduct {
   /**
    * TODO  change this after ToString util finished.
    */
-  getItems(): any {
+  public getItems(): any {
+    this._stockItem.forEach((element) => {
+      console.log(element);
+    });
     return this._stockItem;
   }
 
@@ -84,5 +87,3 @@ class Stock implements IProduct {
     return this._stockItem.get(id).getAmount;
   }
 }
-
-export { Stock };

@@ -1,4 +1,4 @@
-class Item {
+export class Item {
   private _name: string;
 
   private _amount: number;
@@ -35,5 +35,3 @@ class Item {
     return `name: ${this._name}, amount: ${this._amount}`;
   }
 }
-
-export { Item };

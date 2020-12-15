@@ -2,7 +2,7 @@ import { Item } from "./Item";
 import { ShoppingCart } from "./ShoppingCart";
 import { Stock } from "./Stock";
 
-class Manager {
+export class Manager {
   private _shoppingCart: ShoppingCart = ShoppingCart.getInstance();
   private _stock: Stock = Stock.getInstance();
 
@@ -25,13 +25,24 @@ class Manager {
     return `Error: Add ${name} to cart incompleted!, ${name} in stock not enough.`;
   }
 
-  //   public checkout(): string {
-  //     let cartItem: Array<Item> = this._shoppingCart.removeAllItem();
-  //     if (cartItem.length === 0) {
-  //       return "Cannot checkout, your cart is empty.";
-  //     }
-  //     let destination: string = "C:\\Users\\natthapongjie\\Desktop\\receipt.txt";
-  //   }
+  public removeItemFromCart(name: string): string {
+    let amount: number = this._shoppingCart.removeItem(name);
+    if (amount > 0) {
+      let item: Item = new Item(name, amount);
+      this._stock.addItem(item);
+      return `Success: Remove ${name} from cart completed!`;
+    }
+    return `Error: No ${name} in cart.`;
+  }
+
+  public checkout(): string {
+    // let cartItem: Array<Item> = this._shoppingCart.removeAllItem();
+    // if (cartItem.length === 0) {
+    //   return "Cannot checkout, your cart is empty.";
+    // }
+    // let destination: string = "C:\\Users\\natthapongjie\\Desktop\\receipt.txt";
+    return "Can't checkout.";
+  }
 
   public getCartItems(): string {
     return `${this._shoppingCart.getItems()}\n`;
@@ -66,5 +77,3 @@ class Manager {
     return `${this._stock.getItems()}\n`;
   }
 }
-
-export { Manager };

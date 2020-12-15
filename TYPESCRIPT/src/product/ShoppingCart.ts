@@ -1,7 +1,7 @@
 import { IProduct } from "./IProduct";
 import { Item } from "./Item";
 
-class ShoppingCart implements IProduct {
+export class ShoppingCart implements IProduct {
   private static _singleInstance = null;
   private _cart: Map<string, number> = new Map();
 
@@ -49,5 +49,3 @@ class ShoppingCart implements IProduct {
     return 0;
   }
 }
-
-export { ShoppingCart };
